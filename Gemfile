@@ -59,3 +59,4 @@ group :test do
 end
 
 gem "vite_rails"
+gem "slim-rails"
