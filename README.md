@@ -1,24 +1,40 @@
-# README
+# Print Lab
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Overview
+Print Lab is a web application built using Ruby on Rails, a powerful web application framework.
 
-Things you may want to cover:
+## Technologies Used
 
-* Ruby version
+### Technologies Used
+| Technology                | Details          |
+|---------------------------|------------------|
+| **Ruby on Rails**         | Rails Version: 7.2.1.1<br>Ruby Version: 3.3.5 |
+| **CSS Preprocessor**      | Sass             |
+| **JavaScript Bundler**    | Vite             |
+| **JavaScript Package Manager** | Yarn       |
+| **Database**              | PostgreSQL       |
 
-* System dependencies
+## Installation
+1. Clone the repository:
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
 
-* Configuration
+2. Install dependencies:
+    ```sh
+    gem install bundler --conservative
+    bundle install
+    yarn install
+    ```
 
-* Database creation
+3. Set up the database:
+    ```sh
+    bin/rails db:prepare
+    ```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Running the Application
+To start the application, run:
+```sh
+bin/rails server
+```
