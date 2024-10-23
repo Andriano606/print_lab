@@ -40,8 +40,13 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            sudo lsof -t -i:3000 | xargs sudo kill -9
+            if sudo lsof -t -i:3000; then
+              sudo lsof -t -i:3000 | xargs sudo kill -9
+            else
+              echo "No processes running on port 3000"
+            fi
             cd /home/ubuntu/print_lab
+            pwd
             git pull origin main
             gem install bundler
             bundle install
