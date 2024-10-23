@@ -99,6 +99,8 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-  config.hosts << "print-lab.tech"
-  config.hosts << "www.print-lab.tech"
+  config.hosts = [
+    "print-lab.tech",
+    /.*\.print-lab\.tech/
+  ]
 end
