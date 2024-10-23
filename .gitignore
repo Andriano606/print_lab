@@ -72,3 +72,7 @@ node_modules
 
 # ssh key
 *.pem
+
+# pnp files
+.pnp.cjs
+.pnp.loader.mjs
