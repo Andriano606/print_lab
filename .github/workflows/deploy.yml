@@ -34,7 +34,7 @@ jobs:
         run: yarn build
 
       - name: Run database migrations
-        run: bundle exec rails db:migrate RAILS_ENV=production
+        run: bundle exec rails db:migrate
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.5
