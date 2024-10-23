@@ -43,8 +43,9 @@ jobs:
             sudo lsof -t -i:3000 | xargs sudo kill -9
             cd /home/ubuntu/print_lab
             git pull origin main
+            gem install bundler
             bundle install
             yarn install
             yarn build
-            bundle exec rails db:migrate:with_data RAILS_ENV=production
+            RAILS_ENV=production bundle exec rails db:migrate
             RAILS_ENV=production bundle exec puma -C config/puma.rb
