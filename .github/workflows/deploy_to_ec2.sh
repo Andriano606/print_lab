@@ -6,8 +6,6 @@ else
   echo "No processes running on port 3000"
 fi
 
-cd /home/ubuntu/print_lab
-
 # print current folder
 echo $PWD
 
