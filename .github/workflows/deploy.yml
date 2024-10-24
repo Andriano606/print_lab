@@ -42,5 +42,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           script: |
             cd /home/ubuntu/print_lab
+            echo 'test'
             echo $PWD
             ./.github/workflows/deploy_to_ec2.sh
