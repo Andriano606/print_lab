@@ -6,7 +6,7 @@ You can find the live application at [print-lab.tech](https://print-lab.tech/). 
 ## Technologies Used
 | Technology                | Details          |
 |---------------------------|------------------|
-| **Ruby on Rails**         | Rails Version: 7.2.1.1<br>Ruby Version: 3.3.5 |
+| **Ruby on Rails**         | Rails Version: 7.2.1.2<br>Ruby Version: 3.3.5 |
 | **CSS Preprocessor**      | Sass             |
 | **JavaScript Bundler**    | Vite             |
 | **JavaScript Package Manager** | Yarn        |
