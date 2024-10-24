@@ -43,6 +43,8 @@ jobs:
           script: |
             cd /home/ubuntu/print_lab
 
+            source ~/.bashrc || source ~/.profile || source /etc/profile
+
             if sudo lsof -t -i:3000; then
               sudo lsof -t -i:3000 | xargs sudo kill -9
             else
