@@ -1,18 +1,18 @@
 # Print Lab
 
 ## Overview
-Print Lab is a web application built using Ruby on Rails, a powerful web application framework.
+You can find the live application at [print-lab.tech](https://print-lab.tech/). This service provides 3D printing services.
 
 ## Technologies Used
-
-### Technologies Used
 | Technology                | Details          |
 |---------------------------|------------------|
 | **Ruby on Rails**         | Rails Version: 7.2.1.1<br>Ruby Version: 3.3.5 |
 | **CSS Preprocessor**      | Sass             |
 | **JavaScript Bundler**    | Vite             |
-| **JavaScript Package Manager** | Yarn       |
-| **Database**              | PostgreSQL       |
+| **JavaScript Package Manager** | Yarn        |
+| **Database**              | PostgreSQL (RDS) |
+| **Hosting**               | AWS EC2          |
+
 
 ## Installation
 1. Clone the repository:
