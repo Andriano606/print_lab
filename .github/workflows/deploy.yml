@@ -51,15 +51,9 @@ jobs:
               echo "No processes running on port 3000"
             fi
 
-            ruby -v
-            gem -v
-            bundler -v
-            echo $PATH
-
             git pull origin main
-            gem install bundler
-            bundle install
-            yarn install
-            yarn build
-            RAILS_ENV=production bundle exec rails db:migrate
-            RAILS_ENV=production bundle exec puma -C config/puma.rb
+            /home/ubuntu/.asdf/shims/bundle install
+            /home/ubuntu/.yarn/bin/yarn install
+            /home/ubuntu/.yarn/bin/yarn build
+            RAILS_ENV=production /home/ubuntu/.asdf/shims/bundle exec rails db:migrate
+            RAILS_ENV=production /home/ubuntu/.asdf/shims/bundle exec puma -C config/puma.rb
