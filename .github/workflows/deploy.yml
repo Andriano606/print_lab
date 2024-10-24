@@ -41,16 +41,4 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
           script: |
-            if sudo lsof -t -i:3000; then
-              sudo lsof -t -i:3000 | xargs sudo kill -9
-            else
-              echo "No processes running on port 3000"
-            fi
-            cd /home/ubuntu/print_lab
-            git pull origin main
-            gem install bundler
-            bundle install
-            yarn install
-            yarn build
-            RAILS_ENV=production bundle exec rails db:migrate
-            RAILS_ENV=production bundle exec puma -C config/puma.rb
+            ./deploy_to_ec2.sh
