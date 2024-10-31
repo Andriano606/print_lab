@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
-import sass from 'sass'
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
 
 export default defineConfig({
     plugins: [
@@ -11,11 +12,17 @@ export default defineConfig({
             sass: {
                 additionalData: `@import "./app/javascript/entrypoints/application.scss";` // Auto-importing your main Sass file
             }
-        }
+        },
+        postcss: {
+            plugins: [
+                tailwindcss,
+                autoprefixer,
+            ],
+        },
     },
     server: {
         watch: {
-            usePolling: true, // Enable HMR for CSS updates
+            usePolling: true,
         }
     },
 })
