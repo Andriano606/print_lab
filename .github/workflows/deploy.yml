@@ -6,65 +6,45 @@ on:
       - main
 
 jobs:
-  debug:
-    name: Debug
-    runs-on: ubuntu-latest
+ deploy:
+   runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v4
 
-      - name: Set up secret file
-        env:
-          DEBUG_PASSWORD1: ${{ secrets.EC2_HOST }}
-          DEBUG_PASSWORD2: ${{ secrets.EC2_USER }}
-          DEBUG_PASSWORD3: ${{ secrets.EC2_KEY }}
-        run: |
-          echo $DEBUG_PASSWORD1 >> secrets1.txt
-          echo $DEBUG_PASSWORD2 >> secrets2.txt
-          echo $DEBUG_PASSWORD3 >> secrets3.txt
+     - name: Install packages
+       run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
 
-      - name: Run tmate
-        uses: mxschmitt/action-tmate@v2
-#  deploy:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#
-#      - name: Install packages
-#        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libvips postgresql-client
-#
-#      - name: Set up Ruby
-#        uses: ruby/setup-ruby@v1
-#        with:
-#          ruby-version: '3.3.5'
-#          bundler-version: '2.4.2'
-#
-#      - name: Install Yarn
-#        run: corepack enable && corepack prepare yarn@4.5.0 --activate
-#
-#      - name: Install dependencies
-#        run: |
-#          gem install bundler -v 2.4.2
-#          bundle install
-#          yarn install
-#
-#      - name: Build assets
-#        run: yarn build
-#
-#      - name: Deploy to EC2
-#        uses: appleboy/ssh-action@v1.1.0
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ${{ secrets.EC2_USER }}
-#          key: ${{ secrets.EC2_KEY }}
-#          script: |
-#            cd /home/ubuntu/print_lab
-#            git pull origin main
-#            /home/ubuntu/.asdf/shims/bundle install
-#            /home/ubuntu/.yarn/bin/yarn install
-#            /home/ubuntu/.yarn/bin/yarn build
-#            RAILS_ENV=production /home/ubuntu/.asdf/shims/bundle exec rails db:migrate
-#            sudo systemctl restart puma
+     - name: Set up Ruby
+       uses: ruby/setup-ruby@v1
+       with:
+         ruby-version: '3.3.5'
+         bundler-version: '2.4.2'
+
+     - name: Install Yarn
+       run: corepack enable && corepack prepare yarn@4.5.0 --activate
+
+     - name: Install dependencies
+       run: |
+         gem install bundler -v 2.4.2
+         bundle install
+         yarn install
+
+     - name: Build assets
+       run: yarn build
+
+     - name: Deploy to EC2
+       uses: appleboy/ssh-action@v1.1.0
+       with:
+         host: ${{ secrets.EC2_HOST }}
+         username: ${{ secrets.EC2_USER }}
+         key: ${{ secrets.EC2_KEY }}
+         script: |
+           cd /home/ubuntu/print_lab
+           git pull origin main
+           /home/ubuntu/.asdf/shims/bundle install
+           /home/ubuntu/.yarn/bin/yarn install
+           /home/ubuntu/.yarn/bin/yarn build
+           RAILS_ENV=production /home/ubuntu/.asdf/shims/bundle exec rails db:migrate
+           sudo systemctl restart puma
