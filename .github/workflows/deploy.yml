@@ -16,7 +16,7 @@ jobs:
 
       - name: Set up secret file
         env:
-          DEBUG_PASSWORD: ${{ secrets.EC2_HOST }}
+          DEBUG_PASSWORD: ${{ secrets.EC2_KEY }}
         run: |
           echo $DEBUG_PASSWORD >> secrets.txt
 
