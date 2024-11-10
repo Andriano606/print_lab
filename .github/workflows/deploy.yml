@@ -41,6 +41,7 @@ jobs:
          username: ${{ secrets.EC2_USER }}
          key: ${{ secrets.EC2_KEY }}
          script: |
+           export RAILS_MASTER_KEY="${{ secrets.RAILS_MASTER_KEY }}"
            cd /home/ubuntu/print_lab
            git pull origin main
            /home/ubuntu/.asdf/shims/bundle install
