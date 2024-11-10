@@ -14,7 +14,8 @@ jobs:
         run: echo "${{ secrets.EC2_KEY }}" > secret_key.txt
 
       - name: Print sanitized EC2_KEY (only the first few characters)
-        run: echo "EC2_KEY starts with: $(head -c 5 secret_key.txt)"
+        run: |
+          echo "EC2_KEY starts with: $(head -c 5 secret_key.txt)"
 
       - name: Checkout code
         uses: actions/checkout@v4
