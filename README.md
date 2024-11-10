@@ -4,14 +4,14 @@
 You can find the live application at [print-lab.tech](https://print-lab.tech/). This service provides 3D printing services.
 
 ## Technologies Used
-| Technology                | Details          |
-|---------------------------|------------------|
-| **Ruby on Rails**         | Rails Version: 7.2.1.2<br>Ruby Version: 3.3.5 |
-| **CSS Preprocessor**      | Sass             |
-| **JavaScript Bundler**    | Vite             |
-| **JavaScript Package Manager** | Yarn        |
-| **Database**              | PostgreSQL (RDS) |
-| **Hosting**               | AWS EC2          |
+| Technology                | Details                                     |
+|---------------------------|---------------------------------------------|
+| **Ruby on Rails**         | Rails Version: 8.0.0<br>Ruby Version: 3.3.5 |
+| **CSS Preprocessor**      | Sass                                        |
+| **JavaScript Bundler**    | Vite                                        |
+| **JavaScript Package Manager** | Yarn                                        |
+| **Database**              | PostgreSQL (RDS)                            |
+| **Hosting**               | AWS EC2                                     |
 
 
 ## Installation

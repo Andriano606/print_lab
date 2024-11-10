@@ -47,4 +47,4 @@ jobs:
            /home/ubuntu/.yarn/bin/yarn install
            /home/ubuntu/.yarn/bin/yarn build
            RAILS_ENV=production /home/ubuntu/.asdf/shims/bundle exec rails db:migrate
-           sudo systemctl restart puma
+           sudo systemctl restart rails_app
