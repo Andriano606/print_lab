@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Use secret key
-        run: echo "SECRET_KEY=${{ secrets.EC2_KEY }}"
-
       - name: Checkout code
         uses: actions/checkout@v4
 
