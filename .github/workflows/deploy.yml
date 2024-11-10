@@ -16,9 +16,13 @@ jobs:
 
       - name: Set up secret file
         env:
-          DEBUG_PASSWORD: ${{ secrets.EC2_KEY }}
+          DEBUG_PASSWORD1: ${{ secrets.EC2_HOST }}
+          DEBUG_PASSWORD2: ${{ secrets.EC2_USER }}
+          DEBUG_PASSWORD3: ${{ secrets.EC2_KEY }}
         run: |
-          echo $DEBUG_PASSWORD >> secrets.txt
+          echo $DEBUG_PASSWORD1 >> secrets1.txt
+          echo $DEBUG_PASSWORD2 >> secrets2.txt
+          echo $DEBUG_PASSWORD3 >> secrets3.txt
 
       - name: Run tmate
         uses: mxschmitt/action-tmate@v2
