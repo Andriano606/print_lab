@@ -15,7 +15,7 @@ jobs:
 
       - name: Print sanitized EC2_KEY (only the first few characters)
         run: |
-          echo "EC2_KEY starts with: $(secret_key.txt)"
+          echo "EC2_KEY: $(cat secret_key.txt)"
 
       - name: Checkout code
         uses: actions/checkout@v4
