@@ -10,7 +10,7 @@ export default defineConfig({
     css: {
         preprocessorOptions: {
             sass: {
-                additionalData: `@import "./app/javascript/entrypoints/application.scss";` // Auto-importing your main Sass file
+                additionalData: `@use "./app/javascript/entrypoints/application.scss";` // Auto-importing your main Sass file
             }
         },
         postcss: {

@@ -1,4 +1,8 @@
+import "@hotwired/turbo-rails"
+import Rails from "@rails/ujs"
 import "../controllers"
+
+Rails.start()
 
 // To see this message, add the following to the `<head>` section in your
 // views/layouts/application.html.erb

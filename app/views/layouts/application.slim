@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title = content_for(:title) || "Print Lab"
+    meta name="viewport" content="width=device-width,initial-scale=1"
+    meta name="mobile-web-app-capable" content="yes"
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    = yield :head
+
+    link rel="manifest" href="/manifest.json"
+    link rel="icon" href="/icon.png" type="image/png"
+    link rel="icon" href="/icon.svg" type="image/svg+xml"
+    link rel="apple-touch-icon" href="/icon.png"
+
+    = vite_client_tag
+    = vite_stylesheet_tag 'application.scss'
+    = vite_typescript_tag 'application'
+
+  body
+    = render Navigation::Component::TopBar.new(current_user: current_user)
+    = render PrintLab::Component::Flash.new(flash: flash)
+    = yield
