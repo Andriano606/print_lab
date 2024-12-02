@@ -85,8 +85,6 @@ COPY . .
 
 RUN yarn build
 
-RUN RAILS_ENV=production rails db:migrate
-
 # Set the default command to run the Rails server
 CMD ["rails", "s", "-b", "0.0.0.0", "-e", "production", "-p", "3000"]
 
