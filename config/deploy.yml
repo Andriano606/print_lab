@@ -51,6 +51,7 @@ env:
 aliases:
   shell: app exec --interactive --reuse "bash"
   console: app exec --reuse -i "bin/rails console"
+  migrate: app exec bundle exec rails db:migrate RAILS_ENV=production
 
 # Use a different ssh user than root
 #
