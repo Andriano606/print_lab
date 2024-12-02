@@ -19,6 +19,4 @@ html
     = vite_typescript_tag 'application'
 
   body
-    = render Navigation::Component::TopBar.new(current_user: current_user)
-    = render PrintLab::Component::Flash.new(flash: flash)
     = yield
