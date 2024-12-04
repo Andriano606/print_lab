@@ -1,0 +1,9 @@
+nav.navbar.bg-base-100.shadow-md
+  div(class="navbar-start")
+    .dropdown-content
+  .navbar-end
+    - if user_signed_in?
+      = link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-ghost"
+    - else
+      = link_to "Log in", new_user_session_path, class: "btn btn-ghost"
+      = link_to "Sign up", new_user_registration_path, class: "btn btn-primary"
