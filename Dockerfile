@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   apt-transport-https \
   libgmp-dev \
+  redis-server \
   && rm -rf /var/lib/apt/lists/*
 
 # Install Node.js (Using NodeSource repository for the latest LTS version)
