@@ -3,7 +3,7 @@ class ModelFile::Operation::Create < PrintLab::Operation::Base
     self.model = OpenStruct.new(model_files: [])
 
     params[:file].each do |key, file|
-      model_file = ModelFile.new(input_file: file)
+      model_file = ModelFile.new(file: file)
 
       if model_file.save
         self.model.model_files << model_file
