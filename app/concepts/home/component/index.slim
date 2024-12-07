@@ -1,4 +1,4 @@
 = "Index home page"
 
-= form_with(url: root_path, data: { controller: 'dropzone' })
+= render PrintLab::Component::Dropzone.new(path: '/model_files')
 
