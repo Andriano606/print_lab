@@ -3,9 +3,9 @@ class SliceModelJob < ApplicationJob
 
   def perform(model_file_hashid:)
     model_file = ModelFile.find_by_hashid(model_file_hashid)
-    return unless model_file&.input_file&.attached?
+    return unless model_file&.file&.attached?
 
-    sanitized_file_name = sanitize_filename(model_file.input_file.filename.to_s)
+    sanitized_file_name = sanitize_filename(model_file.file.filename.to_s)
     unique_file_name = "#{SecureRandom.uuid}-#{sanitized_file_name}"
     origin_file_path = Rails.root.join("tmp", "uploads", unique_file_name)
     sliced_file_name = unique_file_name.gsub(File.extname(unique_file_name), ".gcode")
@@ -33,7 +33,7 @@ class SliceModelJob < ApplicationJob
 
   def create_local_file(origin_file_path, model_file)
     File.open(origin_file_path, "wb") do |file|
-      file.write(model_file.input_file.download)
+      file.write(model_file.file.download)
     end
   rescue => e
     Rails.logger.error "Failed to create local file at #{origin_file_path}: #{e.message}"
