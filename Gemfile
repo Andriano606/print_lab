@@ -22,8 +22,9 @@ gem "jbuilder"
 # gem "redis", ">= 4.0.1"
 
 gem "devise"
-
+gem "sidekiq"
 gem "view_component"
+gem "hashid-rails" # MIT-License
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -66,3 +67,5 @@ gem "vite_rails"
 gem "slim-rails"
 
 gem "kamal", "~> 2.3"
+
+gem "shellwords", "~> 0.2.1"
