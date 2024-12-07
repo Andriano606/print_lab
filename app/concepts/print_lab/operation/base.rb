@@ -35,7 +35,7 @@ class PrintLab::Operation::Base
   end
 
   def model
-    @attrs[:model]
+    @result[:model]
   end
 
   def add_notice(notice)

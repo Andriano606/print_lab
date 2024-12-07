@@ -1,33 +1,52 @@
 import { Controller } from "@hotwired/stimulus";
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
+import Rails from "@rails/ujs"
 
 export default class extends Controller {
     connect() {
         // Configure Dropzone globally (optional)
         Dropzone.autoDiscover = false; // Prevent auto-discovery of elements
 
-        this.element.classList.add('dropzone')
-        const dzMessage = document.createElement('div')
-        dzMessage.classList.add('dz-message')
-        dzMessage.innerHTML = '<p>Drag & drop files here or click to upload</p>'
-        this.element.appendChild(dzMessage)
-
         document.addEventListener("DOMContentLoaded", () => {
-            new Dropzone(this.element, {
-                paramName: "file", // Rails expects the file field to be named 'file'
-                maxFilesize: 5,    // Set the max file size (in MB)
-                acceptedFiles: "image/*", // Accept only images (optional)
+            let element = this.element as HTMLFormElement
+
+            let uploadMultiple = true
+            if (element.dataset.uploadMultiple !== undefined) {
+                uploadMultiple = element.dataset.uploadMultiple === 'true'
+            }
+            let parallelUploads = uploadMultiple ? 50 : 1
+            let method = 'post'
+            if (element.getAttribute('method') !== undefined) {
+                method = element.getAttribute('method')
+            }
+            new Dropzone(element, {
+                timeout: 180000,
+                uploadMultiple: uploadMultiple,
+                method: method.toLowerCase(),
+                parallelUploads: parallelUploads,
+                // The request Dropzone sends to the server is interpreted as a JavaScript
+                // request but is not evaluated by Dropzone. We need to evaluate it
+                // manually to make redirects, which are implemented via Turbo, work.
+                //
+                // The issue was also reported here:
+                // https://github.com/enyo/dropzone/issues/1595
+                init: function () {
+                    this.on('success', (file, response) => {
+                        eval(response)
+                    })
+                },
+
+                dictDefaultMessage: element.dataset.dictDefaultMessage,
+                paramName: element.dataset.paramName || 'file',
+
+                // We need to include the CSRF token in order to avoid triggering a CSRF
+                // token error on the server.
                 headers: {
-                    "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                    'X-CSRF-Token': Rails.csrfToken(),
+                    Accept: 'application/javascript',
                 },
-                success: function (file, response) {
-                    console.log("File uploaded successfully:", response);
-                },
-                error: function (file, errorMessage) {
-                    console.error("File upload failed:", errorMessage);
-                },
-            });
+            })
         }, { once: true });
     }
 }
