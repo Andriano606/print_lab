@@ -1,6 +1,8 @@
 class SliceModelJob < ApplicationJob
   queue_as :default
 
+  SLICING_PROGRESS_CHANNEL = "slicing_progress_channel"
+
   def perform(model_file_hashid:)
     model_file = ModelFile.find_by_hashid(model_file_hashid)
     return unless model_file&.file&.attached?
@@ -14,11 +16,11 @@ class SliceModelJob < ApplicationJob
 
     create_local_file(origin_file_path, model_file)
 
-    if convert_to_gcode(origin_file_path.dirname, origin_file_path.basename, sliced_file_name)
-      delete_tmp_files(origin_file_path, origin_file_path.dirname.join(sliced_file_name))
-    else
+    unless convert_to_gcode(origin_file_path.dirname, origin_file_path.basename, sliced_file_name)
       Rails.logger.error "G-code conversion failed for #{origin_file_path}"
     end
+
+    delete_tmp_files(origin_file_path, origin_file_path.dirname.join(sliced_file_name))
   end
 
   private
@@ -41,12 +43,34 @@ class SliceModelJob < ApplicationJob
 
   def convert_to_gcode(destination_folder_path, origin_file_name, sliced_file_name)
     docker_command = build_docker_command(destination_folder_path, origin_file_name, sliced_file_name)
-
     Rails.logger.info "Running Docker command: #{docker_command.join(' ')}"
-    system(*docker_command)
+
+    IO.popen(docker_command, err: [ :child, :out ]) do |io|
+      io.each_line do |line|
+        Rails.logger.info line.strip # Log the line for debugging
+        handle_progress(line.strip) # Parse progress and handle it
+      end
+    end
+
+    $?.success?
   rescue => e
     Rails.logger.error "Error during G-code conversion: #{e.message}"
     false
+  end
+
+  def handle_progress(line)
+    if line.match?(/^\d+ => /) # Matches lines like "20 => Generating perimeters"
+      percentage = line.split("=>").first.strip.to_i
+      Rails.logger.info "Slicing progress: #{percentage}%"
+      # Optionally, update a progress tracker or broadcast via ActionCable
+      ActionCable.server.broadcast(SLICING_PROGRESS_CHANNEL, { progress: percentage })
+    elsif line.include?("Detected print stability issues:")
+      Rails.logger.warn "Slicing warning: #{line}"
+      ActionCable.server.broadcast(SLICING_PROGRESS_CHANNEL, { warning: line })
+    elsif line.include?("Slicing result exported")
+      Rails.logger.info "Slicing completed successfully."
+      ActionCable.server.broadcast(SLICING_PROGRESS_CHANNEL, { status: "completed" })
+    end
   end
 
   def build_docker_command(folder_path, origin_file_name, sliced_file_name)
