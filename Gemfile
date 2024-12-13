@@ -68,4 +68,4 @@ gem "slim-rails"
 
 gem "kamal", "~> 2.3"
 
-gem "shellwords", "~> 0.2.1"
+gem "shellwords", "~> 0.2.2"
