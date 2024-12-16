@@ -66,6 +66,6 @@ end
 gem "vite_rails"
 gem "slim-rails"
 
-gem "kamal", "~> 2.3"
+gem "kamal", "~> 2.4"
 
 gem "shellwords", "~> 0.2.1"
